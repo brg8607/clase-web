@@ -7,15 +7,49 @@
     <link rel="stylesheet" href="welcomeStyle.css">
 </head>
 <body>
-    <header class="header">
-        <h1>Monitoreo de Proyecto</h1>
-    </header>
+    <div id="header-placeholder"></div>
     
     <main class="main-content">
+        <div style="text-align: center; padding: 40px;">
+            <h2>¡Bienvenido, <span id="userName"></span>!</h2>
+            <p>Has iniciado sesión exitosamente</p>
+            <button onclick="cerrarSesion()" style="margin-top: 20px; padding: 10px 20px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Cerrar Sesión</button>
+        </div>
     </main>
     
-    <footer class="footer">
-        <p>Gracias por usar Monitoreo de Proyecto</p>
-    </footer>
+    <div id="footer-placeholder"></div>
+
+    <script src="auth.js"></script>
+    <script>
+
+        const session = getCurrentSession();
+        if (!session) {
+            window.location.href = 'login.html';
+        } else {
+ 
+            document.getElementById('userName').textContent = session.nombre;
+        }
+
+
+        function cerrarSesion() {
+            if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                logoutUser();
+                window.location.href = 'login.html';
+            }
+        }
+
+
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+            });
+
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+    </script>
 </body>
 </html>
