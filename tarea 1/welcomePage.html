@@ -13,6 +13,16 @@
         <div style="text-align: center; padding: 40px;">
             <h2>¡Bienvenido, <span id="userName"></span>!</h2>
             <p>Has iniciado sesión exitosamente</p>
+            
+
+            <div class="pokemon-section">
+                <h3>🎮 Pokémon del momento</h3>
+                <div id="pokemon-card" class="pokemon-card">
+                    <p>Cargando...</p>
+                </div>
+                <button onclick="cargarPokemon()" class="pokemon-btn">Otro Pokémon</button>
+            </div>
+            
             <button onclick="cerrarSesion()" style="margin-top: 20px; padding: 10px 20px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Cerrar Sesión</button>
         </div>
     </main>
@@ -50,6 +60,30 @@
             .then(data => {
                 document.getElementById('footer-placeholder').innerHTML = data;
             });
+
+        // PokeAPI
+        function cargarPokemon() {
+            const randomId = Math.floor(Math.random() * 151) + 1; // Pokémon de la primera generación
+            
+            fetch(`https://pokeapi.co/api/v2/pokemon/${randomId}`)
+                .then(response => response.json())
+                .then(pokemon => {
+                    const tipos = pokemon.types.map(t => t.type.name).join(', ');
+                    document.getElementById('pokemon-card').innerHTML = `
+                        <img src="${pokemon.sprites.other['official-artwork'].front_default}" alt="${pokemon.name}">
+                        <h4>${pokemon.name.toUpperCase()}</h4>
+                        <p><strong>#${pokemon.id}</strong></p>
+                        <p>Tipo: ${tipos}</p>
+                        <p>Altura: ${pokemon.height / 10} m | Peso: ${pokemon.weight / 10} kg</p>
+                    `;
+                })
+                .catch(error => {
+                    document.getElementById('pokemon-card').innerHTML = '<p>Error al cargar Pokémon</p>';
+                });
+        }
+
+        // Cargar un Pokémon al iniciar
+        cargarPokemon();
     </script>
 </body>
 </html>
