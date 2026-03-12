@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="header-placeholder"></div>
+    
     <div class="container">
         <div class="login-box">
             <h1>Iniciar Sesión</h1>
@@ -32,10 +34,23 @@
             </form>
         </div>
     </div>
+    
+    <div id="footer-placeholder"></div>
 
     <script src="auth.js"></script>
     <script>
-        // Verificar si ya hay sesión activa
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+            });
+
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+
         if (isLoggedIn()) {
             window.location.href = 'welcomePage.html';
         }

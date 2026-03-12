@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="header-placeholder"></div>
+    
     <div class="container">
         <div class="login-box">
             <h1>Crear Cuenta</h1>
@@ -43,9 +45,23 @@
             </form>
         </div>
     </div>
+    
+    <div id="footer-placeholder"></div>
 
     <script src="auth.js"></script>
     <script>
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+            });
+
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+
         const form = document.getElementById('registerForm');
         const messageDiv = document.getElementById('message');
 
